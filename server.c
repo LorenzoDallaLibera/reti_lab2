@@ -12,6 +12,7 @@
 #define MYPORT "3490"	// the port users will be connecting to
 
 #define MAXBUFLEN 100
+#define CONFERMA_RICEZIONE "ricevuto"
 
 // get sockaddr, IPv4 or IPv6:
 
@@ -111,11 +112,24 @@ int main(void)
 		printf("...di lunghezza %d bytes...\n", numbytes);
 		buf[numbytes] = '\0';
 		printf("...Contentente: \"%s\"...\n", buf);
+
+		//conferma di ricezione
+		if ((numbytes = sendto(sockfd, CONFERMA_RICEZIONE, strlen(CONFERMA_RICEZIONE), 0, (struct sockaddr *)&their_addr, (socklen_t)addr_len)) == -1) {
+			perror("Errore nell'invio del messaggio");
+			exit(1);
+		}
+
+		//fermo il server se ricevo il comando "crash"
+		if(strcmp(buf,"crash")==0){
+			printf("Spegnimento\n");
+			break;
+		}
+
 		printf("In ricezione...\n");
-	
+
 	}
 
-		close(sockfd);
+	close(sockfd);
 
 	return 0;
 }
