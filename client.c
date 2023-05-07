@@ -1,3 +1,7 @@
+//Lorenzo Dalla Libera 2009289
+//Alessandro Rossi 2003713
+//Rachele Milani 1204804
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
